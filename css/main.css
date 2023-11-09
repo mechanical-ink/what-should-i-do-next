@@ -1,4 +1,8 @@
 .highlight {
-    background-color: yellow;
-    padding: 0.5rem;
+  background-color: yellow;
+  padding: 0.5rem;
+}
+
+.hidden {
+  display: none;
 }
