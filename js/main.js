@@ -6,11 +6,18 @@ const itemsListContainer = document.getElementById("items-list-container");
 const itemsListEmpty = document.getElementById("items-list-empty");
 const highlightProjectButton = document.getElementById("highlight-project");
 
-const items = [];
+let items = [];
 
 function createListItem(item) {
+  const deleteButton = document.createElement("button");
   const listItem = document.createElement("li");
+
+  deleteButton.classList.add("button", "button-delete");
+  deleteButton.type = "button";
+  deleteButton.textContent = "Delete";
+
   listItem.textContent = item;
+  listItem.appendChild(deleteButton);
 
   return listItem;
 }
@@ -62,6 +69,20 @@ function appendAndPersistNewItem(newItem) {
   } catch (error) {
     throw new Error(`Error saving items: ${error.message}`);
   }
+}
+
+if (itemsList) {
+  itemsList.addEventListener("click", (event) => {
+    const target = event.target;
+
+    if (target.classList.contains("button-delete")) {
+      const item = target.parentElement.firstChild.textContent;
+      items = items.filter((currentItem) => currentItem !== item);
+
+      localStorage.setItem("items", JSON.stringify(items));
+      target.parentElement.remove();
+    }
+  });
 }
 
 if (addItemForm) {
